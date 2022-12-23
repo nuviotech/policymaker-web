@@ -1,0 +1,8 @@
+
+
+.background{
+	background: url("../webImage/bgm.png");
+	background-repeat:no-repeat;
+	background-size:cover;
+	height:70vh;
+}

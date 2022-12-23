@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="navbar::layout(~{::section})">
+	
+<head>
+</head>	
+<body>
+	<section>
+	<div class="row">
+	<div class="col-12 col-sm-8 offset-sm-2 my-4 card p-0">	
+		<div class="text-center card-header m-0 mb-3">
+			<h3 class="text-success"><b>SIGN UP FORM</b></h3>
+		</div>
+		<div class="card-body">
+		<form th:action="@{/doSignUp}" method="Post" th:object="${seller}">
+			
+		<div class="form-group">
+		    <small for="nameofCompanyid" class="text-muted">Name of company<span class="text-danger"> *</span></small>
+		    <input th:value="${seller.getNameOfCompany()}" name="nameOfCompany" th:classappend="${#fields.hasErrors('nameOfCompany')?'is-invalid':'' }" type="text" class="form-control" id="nameofCompanyid" aria-describedby="emailHelp">
+		    <div th:each="e : ${#fields.errors('nameOfCompany')}"
+								th:text="${e}" class="invalid-feedback">
+		 	 </div>
+		 </div>
+		 
+		 <div class="form-group">
+		    <small for="nameofCompanyid" class="text-muted">Company website url</small>
+		    <input th:value="${seller.componyUrl}" name="componyUrl" th:classappend="${#fields.hasErrors('componyUrl')?'is-invalid':'' }" type="text" class="form-control" id="nameofCompanyid" aria-describedby="emailHelp">
+		    <div th:each="e : ${#fields.errors('componyUrl')}"
+								th:text="${e}" class="invalid-feedback">
+		 	 </div>
+		 </div>
+		 <div class="row mb-4 mt-2">
+				<div class="col">
+					<small class=" text-small text-muted ">Type Of Company</small>
+					<div class="form-outline">
+						<select class="form-control" name="typeOfCompany" id="">
+							<option value="Sole Proprietor">Sole Proprietor</option>
+							<option value="Partnership Firm">Partnership Firm</option>
+							<option value="Pvt Ltd Company">Pvt Ltd Company</option>
+							<option value="Public Ltd Company">Public Ltd Company</option>
+							<option value="One Person Company">One Person Company</option>
+							<option value="Limited Liability Partnership">Limited Liability Partnership</option>
+							<option value="Other">Others</option>
+						 </select>
+					 </div>
+				 </div>
+						
+				 <div class="col">
+					   <small class=" text-small text-muted ">Select categorys<span class="text-danger"> *</span></small>
+					   <div class="button-group">
+						   <input required="required"
+											placeholder="Select the categorys from dropdown"
+											class="categoryInput form-control dropdown-toggle"
+											data-toggle="dropdown">
+							   <input type="hidden" id="categorysInput" name="categorys" />
+						   <ul class="dropdown-menu catDrop bg-light" >
+							   <li th:each="category : ${categorys}"><a href="#" class="small ml-4 mt-0  text-muted" th:attr="data-value=${category.getCatergoryName()}"
+												tabIndex="-1"><input type="checkbox" />&nbsp;<span class="" th:text="${category.getCatergoryName()}"></span></a></li>
+						   </ul>
+					   </div>
+				   </div>	
+		</div>
+		
+			<class="text-success" hr/>
+			<p class="text-muted">Contact Person Details</p>
+			
+			<div class="row mt-2">
+				<div class="col-12 col-sm-6">
+					  <div class="form-group">
+					    <small for="firstNameid" class="text-muted">First Name <span class="text-danger"> *</span></small>
+					    <input th:value="${seller.firstName}" name="firstName" th:classappend="${#fields.hasErrors('firstName')?'is-invalid':'' }" type="text" class="form-control" id="firstNameid" aria-describedby="emailHelp">
+					    <div th:each="e : ${#fields.errors('firstName')}"
+								th:text="${e}" class="invalid-feedback">
+						</div>
+					  </div>
+				</div>
+				
+				<div class="col-12 col-sm-6">
+					  <div class="form-group">
+					    <small for="secondNameid" class="text-muted">Last Name </small>
+					    <input th:value="${seller.lastName}" name="lastName" th:classappend="${#fields.hasErrors('lastName')?'is-invalid':'' }" type="text" class="form-control" id="secondNameid" aria-describedby="emailHelp">
+					    <div th:each="e : ${#fields.errors('lastName')}"
+								th:text="${e}" class="invalid-feedback">
+						</div>
+					  </div>
+				</div>
+				
+			</div>
+			
+			<div class="form-group ">
+		    <small for="exampleInputEmail1" class="text-muted">Enter phone number <span class="text-danger"> *</span></small>
+		    <input th:value="${seller.phoneNumber}" name="phoneNumber" th:classappend="${#fields.hasErrors('phoneNumber')?'is-invalid':'' }" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+		    <div th:each="e : ${#fields.errors('phoneNumber')}"
+								th:text="${e}" class="invalid-feedback">
+		  </div>
+			
+		   <div class="form-group ">
+		    <small for="exampleInputEmail1" class="text-muted">Email address <span class="text-danger"> *</span></small>
+		    <input th:value="${seller.emailAddr}" name="emailAddr" th:classappend="${#fields.hasErrors('emailAddr')?'is-invalid':'' }" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+		    <div th:each="e : ${#fields.errors('emailAddr')}"
+								th:text="${e}" class="invalid-feedback">
+		  </div>
+		  
+			<div class="row mb-4 mt-2">
+				<div class="col">
+					<small class=" text-small text-muted ">Select country <span class="text-danger"> *</span></small>
+					<div class="form-outline">
+						<select class="form-control" name="country" id="countySel" size="1">
+							<option  value="Nan" selected="selected">Please select Country</option>
+						</select>
+					</div>
+				</div>
+						
+				<div class="col">
+					<small class=" text-small text-muted ">Select state</small>
+					<div class="form-outline">
+						<select class="form-control" name="state" id="stateSel" size="1">
+								<option value="Nan" selected="selected">Please select state</option>
+						</select>
+					</div>
+							
+		
+					      <!--City -->
+					      <div class="select-something d-none">
+					            District/City: <select name="district" id="districtSel" size="1"></select>
+					      </div>
+							
+				</div>
+			</div>
+		  
+		  
+		  <div class="row mt-2">
+		  		<div class="col col-sm-6">
+		  			<small for="pincodeid" class="text-muted">Pincode<span class="text-danger"> *</span></small>
+					    <input th:value="${seller.pincode}" name="pincode" th:classappend="${#fields.hasErrors('pincode')?'is-invalid':'' }" type="text" class="form-control" id="pincodeid" aria-describedby="emailHelp">
+					    <div th:each="e : ${#fields.errors('pincode')}"
+											th:text="${e}" class="invalid-feedback"></div>
+		  		</div>
+		  		
+		  		<div class="col col-sm-6">
+		  		<small for="pincodeid" class="text-muted">GST No<span class="text-danger"> *</span></small>
+					    <input th:value="${seller.GstNo}" name="GstNo" th:classappend="${#fields.hasErrors('GstNo')?'is-invalid':'' }" type="text" class="form-control" id="pincodeid" aria-describedby="emailHelp">
+					    <div th:each="e : ${#fields.errors('GstNo')}"
+											th:text="${e}" class="invalid-feedback"></div>
+		  		</div>
+		  </div>
+		  
+		  <div class="row mt-2">
+		  		<div class="col col-sm-6">
+		  			<small for="passwordO" class="text-muted">Password<span class="text-danger"> *</span></small>
+					    <input th:value="${seller.password}" name="password" th:classappend="${#fields.hasErrors('password')?'is-invalid':'' }" type="password" class="form-control" id="passwordO" aria-describedby="emailHelp">
+					    <div th:each="e : ${#fields.errors('password')}"
+											th:text="${e}" class="invalid-feedback"></div>
+		  		</div>
+		  		<div class="col col-sm-6">
+		  		<small for="passwordC " class="text-muted">Confirm Password</small>
+					    <input name="passwordConfirm" th:classappend="${#fields.hasErrors('passwordConfirm')?'is-invalid':'' }" type="password" class="form-control" id="passwordC" aria-describedby="emailHelp">
+					    <div th:each="e : ${#fields.errors('passwordConfirm')}"
+											th:text="${e}" class="invalid-feedback"></div>
+		  		</div>
+		  </div>
+		  
+		  <small class=" text-small text-muted ">Select the sign up type<span class="text-danger"> *</span</small>
+							<div class="form-outline">
+								<select class="form-control" name="signUpType" id="">
+									<option value="seller">Sign up as seller</option>
+									<option value="marketplace">Sign up as marketplace</option>
+									<option value="both">Sign up as Both(seller,marketplace)</option>
+								</select>
+							</div>
+		  
+		  <small class="text-muted " >Bussiness Address<span class="text-danger"> *</span></small>
+		  <textarea th:text="${seller.bussinessAddr}" name="bussinessAddr" class=" form-control" row=6></textarea>
+		  
+		 <div class="text-right">
+		  <button type="reset" class="btn btn-dark mt-3 px-4">Reset</button>		 
+		  <button type="submit" class="btn btn-primary mt-3 px-4">Submit</button>	
+		  
+		  </div>																							
+		</form>
+		</div>
+	</div>
+	</div>
+	
+	
+	
+		<script th:if="${msg.equals('password')}">
+			swal("Oops, Something wrong.", "Confirmation password is wrong. please enter correct password and try again.", "error");
+		</script>
+		<script th:if="${msg.equals('save')}">
+			swal("Save successfull.", "Your, data is saved successfully. thank you..", "success");
+		</script>
+		<script th:if="${msg.equals('error')}">
+			swal("Opps, something wrong", "Please try with another email address, or fill correct data.", "error");
+		</script>
+		<script th:src="@{/files/CountryState.js}"></script>
+	</section>
+</body>
+</html>

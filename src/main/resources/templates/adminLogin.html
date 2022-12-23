@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="navbar::layout(~{::section})">
+	
+<head>
+	
+</head>	
+<body>
+	<section class="my-5">
+  <div class="container h-100" >
+    <div class="row d-flex align-items-center justify-content-center h-100">
+      <div class="col-md-8 col-lg-7 col-xl-6">
+        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
+      		    class="img-fluid" alt="Phone image">
+      </div>
+      <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1" >
+        <form id="AdminLoginForm"><!---->
+          <!-- Email input -->
+          <div class="form-outline mb-2">
+          	<p id="errorMsg"></p>
+            <div th:if="${param.error}" class=" mb-2 pt-1 pb-0 text-danger">
+				<p><i class="fa-solid fa-triangle-exclamation"></i> &nbsp;Invalid login Id or Password !!</p>
+			</div>
+			<div th:if="${param.captcha}" class=" mb-2 pt-1 pb-0 text-danger">
+				<p><i class="fa-solid fa-triangle-exclamation"></i> &nbsp;Incorrect captcha !!</p>
+			</div>
+			<div th:if="${param.logout}" class="mb-1 pt-1 pb-0 text-success">
+				<p>You'r Successfully logout !!</p>
+			</div>
+			
+            <input name="username" type="text" id="form1Example13" class="form-control form-control-lg" />
+            <label class="form-label" for="form1Example13">Login ID</label>
+          </div>
+
+          <!-- Password input -->
+          <div class="form-outline mt-2">
+            <input required name="password" type="password" id="form1Example23" class="form-control form-control-lg" />
+            <label class="form-label" for="form1Example23">Password</label>
+          </div>
+        
+          <div class="form-outline mt-2">
+				<select class="form-control" name="type" id="">
+					<option value="seller">login as seller</option>
+					<option value="marketplace">login as marketplace</option>
+					<option value="both">login as Both(seller,marketplace)</option>
+				</select>
+			</div>  
+        
+          <div  class="form-outline text-center mt-2" id="captchaPreview">
+          	
+          </div>
+		  <div class="input-group mb-3">
+			  <input name="captcha" required id="enteredCaptcha" type="text" class="form-control" placeholder="Enter captcha here.." aria-label="Recipient's username" aria-describedby="button-addon2">
+			  <div class="input-group-append">
+			    <button id="captchaPreviewRefresh" class="btn btn-outline-secondary" type="button">Refresh</button>
+			  </div>
+		  </div>
+	
+			
+          <div class="d-flex justify-content-around align-items-center mb-4">
+            <!-- Checkbox -->
+            <div class="form-check">
+              <input required class="form-check-input" type="checkbox" value="" id="checkBox" checked />
+              <label class="form-check-label" for="form1Example3">Terms and Conditions </label>
+            </div>
+            <a href="#!">Forgot password?</a>
+          </div>
+
+          <!-- Submit button -->
+          <button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
+
+          
+
+        </form>
+      </div>
+    </div>
+  </div>
+  
+</section>
+
+</body>
+
+</html>
