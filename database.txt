@@ -1,0 +1,163 @@
+DATE : 27-12-2022 05:01PM
+
+mysql> use demo
+Database changed
+mysql> desc categorys;
++---------------+--------------+------+-----+---------+----------------+
+| Field         | Type         | Null | Key | Default | Extra          |
++---------------+--------------+------+-----+---------+----------------+
+| category_id   | int(11)      | NO   | PRI | NULL    | auto_increment |
+| category_name | varchar(255) | YES  |     | NULL    |                |
++---------------+--------------+------+-----+---------+----------------+
+2 rows in set (0.07 sec)
+
+mysql> select * from categorys;
++-------------+----------------------------------------+
+| category_id | category_name                          |
++-------------+----------------------------------------+
+|           1 | Video Games                            |
+|           2 | Digital Music                          |
+|           3 | Health and household items             |
+|           4 | Patio, lawn, and garden                |
+|           5 | Sports, outdoor, and fitness supplies  |
+|           6 | Books                                  |
+|           7 | Clothing, shoes, and jewelry           |
+|           8 | Home and kitchen items                 |
+|           9 | Pet supplies                           |
+|          10 | Beauty and personal care               |
+|          11 | Cell phone accessories                 |
+|          12 | Toys and games                         |
+|          13 | Tools and home improvement items       |
+|          14 | Kitchen and dining items               |
+|          15 | Grocery and gourmet food               |
+|          16 | Office products                        |
+|          17 | Others                                 |
++-------------+----------------------------------------+
+17 rows in set (0.00 sec)
+
+mysql> desc seller;
++-----------------+--------------+------+-----+---------+----------------+
+| Field           | Type         | Null | Key | Default | Extra          |
++-----------------+--------------+------+-----+---------+----------------+
+| sellerid        | int(11)      | NO   | PRI | NULL    | auto_increment |
+| gst_no          | varchar(255) | YES  |     | NULL    |                |
+| bussiness_addr  | longtext     | YES  |     | NULL    |                |
+| categorys_id    | varchar(255) | YES  |     | NULL    |                |
+| compony_url     | varchar(255) | YES  |     | NULL    |                |
+| country         | varchar(255) | YES  |     | NULL    |                |
+| email           | varchar(255) | YES  | UNI | NULL    |                |
+| first_name      | varchar(30)  | YES  |     | NULL    |                |
+| last_name       | varchar(30)  | YES  |     | NULL    |                |
+| name_of_company | varchar(255) | YES  |     | NULL    |                |
+| password        | varchar(255) | YES  |     | NULL    |                |
+| phone_number    | varchar(255) | YES  |     | NULL    |                |
+| pincode         | varchar(255) | YES  |     | NULL    |                |
+| state           | varchar(255) | YES  |     | NULL    |                |
+| type_of_company | varchar(255) | YES  |     | NULL    |                |
++-----------------+--------------+------+-----+---------+----------------+
+15 rows in set (0.07 sec)
+
+mysql> select * from seller;
++----------+-----------------+-----------------+--------------+-----------------+---------+------------------+------------+-----------+-----------------+----------+--------------+---------+-------------+-----------------+
+| sellerid | gst_no          | bussiness_addr  | categorys_id | compony_url     | country | email            | first_name | last_name | name_of_company | password | phone_number | pincode | state       | type_of_company |
++----------+-----------------+-----------------+--------------+-----------------+---------+------------------+------------+-----------+-----------------+----------+--------------+---------+-------------+-----------------+
+|        1 | 123456789012345 | this is addr    | NULL         | flipcart.com    | India   | rohit@gmail.com  | rohit      | k         | flipcart        | rohit    | 8978675645   | 456789  | maharashtra | Pvt Ltd Company |
+|        2 | 123455432112345 | this is my addr | NULL         | www.infinix.com | Algeria | Gupta@gmail.com  | Ramesh     | Gupta     | Infinix         | gupta    | 8976658909   | 786789  | Alger       | Pvt Ltd Company |
+|        3 | 123456789012345 | this is morgan  | NULL         | Ryzen.com       | Albania | Morgan@gmail.com | DCozt      | Morgan    | Ryzen           | morgan   | 8976564867   | 567876  | Durres      | Pvt Ltd Company |
++----------+-----------------+-----------------+--------------+-----------------+---------+------------------+------------+-----------+-----------------+----------+--------------+---------+-------------+-----------------+
+3 rows in set (0.00 sec)
+
+mysql> desc seller_categorys;
++----------------------------+---------+------+-----+---------+-------+
+| Field                      | Type    | Null | Key | Default | Extra |
++----------------------------+---------+------+-----+---------+-------+
+| seller_list_sellerid       | int(11) | NO   | MUL | NULL    |       |
+| categorys_list_category_id | int(11) | NO   | MUL | NULL    |       |
++----------------------------+---------+------+-----+---------+-------+
+2 rows in set (0.07 sec)
+
+mysql> desc market_place;
++-----------------+--------------+------+-----+---------+----------------+
+| Field           | Type         | Null | Key | Default | Extra          |
++-----------------+--------------+------+-----+---------+----------------+
+| market_placeid  | int(11)      | NO   | PRI | NULL    | auto_increment |
+| gst_no          | varchar(255) | YES  |     | NULL    |                |
+| bussiness_addr  | varchar(255) | YES  |     | NULL    |                |
+| categorys_id    | varchar(255) | YES  |     | NULL    |                |
+| compony_url     | varchar(255) | YES  |     | NULL    |                |
+| country         | varchar(255) | YES  |     | NULL    |                |
+| email           | varchar(255) | YES  | UNI | NULL    |                |
+| first_name      | varchar(30)  | YES  |     | NULL    |                |
+| last_name       | varchar(30)  | YES  |     | NULL    |                |
+| name_of_company | varchar(255) | YES  |     | NULL    |                |
+| password        | varchar(255) | YES  |     | NULL    |                |
+| phone_number    | varchar(255) | YES  |     | NULL    |                |
+| pincode         | varchar(255) | YES  |     | NULL    |                |
+| state           | varchar(255) | YES  |     | NULL    |                |
+| type_of_company | varchar(255) | YES  |     | NULL    |                |
++-----------------+--------------+------+-----+---------+----------------+
+15 rows in set (0.07 sec)
+
+mysql> select * from market_place;
++----------------+-----------------+-----------------+--------------+-----------------+---------+------------------+------------+-----------+-----------------+----------+--------------+---------+-------------+--------------------+
+| market_placeid | gst_no          | bussiness_addr  | categorys_id | compony_url     | country | email            | first_name | last_name | name_of_company | password | phone_number | pincode | state       | type_of_company    |
++----------------+-----------------+-----------------+--------------+-----------------+---------+------------------+------------+-----------+-----------------+----------+--------------+---------+-------------+--------------------+
+|             11 | 123456789012345 | this is addr    | NULL         | flipcart.com    | India   | rohit@gmail.com  | rohit      | k         | flipcart        | rohit    | 8978675645   | 456789  | maharashtra | Pvt Ltd Company    |
+|             12 | 123455432112345 | this is my addr | NULL         | www.infinix.com | Algeria | Gupta@gmail.com  | Ramesh     | Gupta     | Infinix         | gupta    | 8976658909   | 786789  | Alger       | Pvt Ltd Company    |
+|             13 | 123456789012345 | this is morgan  | NULL         | Ryzen.com       | Albania | Morgan@gmail.com | DCozt      | Morgan    | Ryzen           | morgan   | 8976564867   | 567876  | Durres      | Pvt Ltd Company    |
+|             14 | 123455432112345 | thisb is addr   | NULL         | www.amd         | Austria | Patil@gmail.com  | rahul      | patil     | AMD             | rohitP   | 8978675645   | 675765  | Styria      | Public Ltd Company |
++----------------+-----------------+-----------------+--------------+-----------------+---------+------------------+------------+-----------+-----------------+----------+--------------+---------+-------------+--------------------+
+4 rows in set (0.00 sec)
+
+mysql> desc marketplace_categorys;
++---------------------------------+---------+------+-----+---------+-------+
+| Field                           | Type    | Null | Key | Default | Extra |
++---------------------------------+---------+------+-----+---------+-------+
+| marketplace_list_market_placeid | int(11) | NO   | MUL | NULL    |       |
+| categorys_listm_category_id     | int(11) | NO   | MUL | NULL    |       |
++---------------------------------+---------+------+-----+---------+-------+
+2 rows in set (0.07 sec)
+
+mysql> select * from marketplace_categorys;
++---------------------------------+-----------------------------+
+| marketplace_list_market_placeid | categorys_listm_category_id |
++---------------------------------+-----------------------------+
+|                              11 |                           5 |
+|                              11 |                           6 |
+|                              11 |                           7 |
+|                              11 |                           8 |
+|                              11 |                           9 |
+|                              11 |                          10 |
+|                              11 |                          11 |
+|                              12 |                          11 |
+|                              12 |                          16 |
+|                              13 |                           1 |
+|                              13 |                           2 |
+|                              13 |                          11 |
+|                              13 |                          17 |
+|                              14 |                           8 |
+|                              14 |                           9 |
+|                              14 |                          10 |
++---------------------------------+-----------------------------+
+16 rows in set (0.00 sec)
+
+mysql> select * from seller_categorys;
++----------------------+----------------------------+
+| seller_list_sellerid | categorys_list_category_id |
++----------------------+----------------------------+
+|                    1 |                          5 |
+|                    1 |                          6 |
+|                    1 |                          7 |
+|                    1 |                          8 |
+|                    1 |                          9 |
+|                    1 |                         10 |
+|                    1 |                         11 |
+|                    2 |                         11 |
+|                    2 |                         16 |
+|                    3 |                          1 |
+|                    3 |                          2 |
+|                    3 |                         11 |
+|                    3 |                         17 |
++----------------------+----------------------------+
+13 rows in set (0.00 sec)
+
