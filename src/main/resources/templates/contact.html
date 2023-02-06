@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="navbar::layout(~{::section})">
+	
+<head>
+	
+</head>	
+<body>
+	<section class="my-5">
+		<div class="row ms-1">
+			<div class="col-12 col-md-10 offset-md-1">
+				<div class="row">
+					<div class="col-12 col-md-6 col-lg-5">
+						<h4 class="text-muted"><b>Contact Us</b></h4>
+						<div class="my-4">
+							<div class="row my-2">
+								<div class="col-3"><b>Address </b></div>
+								<div class="col-9">Shop No. 1, Shakti Dham, Plot No. 108 Ghansoli, Navi Mumbai - 400701, Maharashtra, India.</div>
+							</div>
+							
+							<div class="row my-2">
+								<div class="col-3"><b>Phone </b></div>
+								<div class="col-9">+91 7718852036</div>
+							</div>
+							
+							<div class="row my-2">
+								<div class="col-3"><b>Email </b></div>
+								<div class="col-9"><a th:href="@{mailto:support@nuvio.in}">support@nuvio.in</a></div>
+							</div>
+							
+							
+						</div>
+						
+						<hr class="mt-4" />
+						<div class="my-5">
+							<h4>Get Social</h4>
+							<div class="social-icon mt-2">
+								<a  href="" ><i class="fa-3x fa-brands fa-square-facebook"></i></a>
+								<a class="mx-1" href="" ><i class="fa-3x fa-brands fa-square-twitter"></i></a>
+								<a class="mx-1" href="" ><i class="fa-3x fa-brands fa-square-google-plus"></i></a>
+								
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-md-6 col-lg-7">
+						<h4 class="text-muted bold"><b>Get In Touch With Us</b></h4>
+						<p></p>
+						<div class="">
+							<form class="form">
+								<label for="email">Enter Name</label>
+								<input placeholder="enter your name..." class="form-control" id="email" type="text">
+								<label for="email">Enter Email <span class="text-danger">*</span></label>
+								<input required="required" placeholder="enter your email.." class="form-control" id="email" type="email">
+								<label>Message <span class="text-danger">*</span></label>
+								<textarea required="required" class="form-control" placeholder="enter the message here..." rows="5" cols=""></textarea>
+								<div class="text-right my-3">
+									<button class="btn btn-success">Send It</button>
+								</div>
+							</form>
+						</div>
+					
+					</div>
+				
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>	
