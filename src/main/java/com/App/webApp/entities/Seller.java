@@ -18,10 +18,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import com.App.webApp.service.LoginUser;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-public class Seller {
+public class Seller implements LoginUser {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -70,6 +71,8 @@ public class Seller {
 	
 	String country;
 	String state;
+	String role;
+	String type;
 	
 	/*@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "seller")
 	private List<Categorys> categorysList = new ArrayList<>();*/
@@ -261,6 +264,31 @@ public class Seller {
 
 	public void setSignUpType(String signUpType) {
 		this.signUpType = signUpType;
+	}
+	
+
+
+
+	public String getRole() {
+		return role;
+	}
+
+
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+
+
+	public String getType() {
+		return type;
+	}
+
+
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 

@@ -15,7 +15,9 @@
       		    class="img-fluid" alt="Phone image">
       </div>
       <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1" >
-        <form id="AdminLoginForm"><!---->
+        <!--  form th:action="@{/loginDetails}" method="Post" th:object="${userLogin}" --><!-- id="AdminLoginForm"-->
+        <form th:action="@{/do_login}" method="post" onsubmit="return addUsername()" >
+        
           <!-- Email input -->
           <div class="form-outline mb-2">
           	<p id="errorMsg"></p>
@@ -29,10 +31,10 @@
 				<p>You'r Successfully logout !!</p>
 			</div>
 			
-            <input name="username" type="text" id="form1Example13" class="form-control form-control-lg" />
-            <label class="form-label" for="form1Example13">Login ID</label>
+            <input name="emailAddr"  type="text" id="email" class="form-control form-control-lg" />
+            <label class="form-label" for="form1Example13">Email ID</label>
           </div>
-
+		  <input type="hidden" name="username" id="username">
           <!-- Password input -->
           <div class="form-outline mt-2">
             <input required name="password" type="password" id="form1Example23" class="form-control form-control-lg" />
@@ -40,15 +42,14 @@
           </div>
         
           <div class="form-outline mt-2">
-				<select class="form-control" name="type" id="">
+				<select class="form-control" name="type" id="type">
 					<option value="seller">login as seller</option>
 					<option value="marketplace">login as marketplace</option>
-					<option value="both">login as Both(seller,marketplace)</option>
 				</select>
 			</div>  
         
           <div  class="form-outline text-center mt-2" id="captchaPreview">
-          	
+          	<input type="hidden" disabled="disabled" id="captchaGeneratedValue">
           </div>
 		  <div class="input-group mb-3">
 			  <input name="captcha" required id="enteredCaptcha" type="text" class="form-control" placeholder="Enter captcha here.." aria-label="Recipient's username" aria-describedby="button-addon2">
@@ -64,14 +65,11 @@
               <input required class="form-check-input" type="checkbox" value="" id="checkBox" checked />
               <label class="form-check-label" for="form1Example3">Terms and Conditions </label>
             </div>
-            <a href="#!">Forgot password?</a>
+            <a th:href="@{/forgotePassword}">Forgot password?</a>
           </div>
 
           <!-- Submit button -->
           <button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
-
-          
-
         </form>
       </div>
     </div>

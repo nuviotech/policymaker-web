@@ -5,10 +5,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,9 +25,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.reactive.function.client.WebClient;
+
 
 import com.App.webApp.entities.Categorys;
 import com.App.webApp.entities.MarketPlace;
@@ -28,14 +40,18 @@ import com.App.webApp.repo.CategorysRepository;
 import com.App.webApp.repo.MarketPlacerRepository;
 import com.App.webApp.repo.SellerRepository;
 import com.App.webApp.repo.UserRepository;
+import com.App.webApp.service.LoginUser;
 import com.App.webApp.service.ServiceClass;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import reactor.core.publisher.Mono;
+
 @Controller
 public class MainController {
+	
 	@Autowired
 	UserRepository userRepository;
 	@Autowired
@@ -44,7 +60,42 @@ public class MainController {
 	MarketPlacerRepository marketPlacerRepository;
 	@Autowired
 	CategorysRepository  categorysRepository;
+	@Autowired
+	BCryptPasswordEncoder bCryptPasswordEncoder;
 	
+	
+	static public String loginType=null;
+	
+	
+	@ModelAttribute
+	public void getData(Principal p, Model model) {
+		if(p != null) {
+			if(MainController.loginType.equalsIgnoreCase("seller")) {
+				Seller user=sellerRepository.findByEmailAddr(p.getName());
+				model.addAttribute("loginUser", user);
+				model.addAttribute("firstName", user.getFirstName());
+				model.addAttribute("path","/user/sellerdashbord");	
+			}else if(loginType.equalsIgnoreCase("marketplace")){
+				MarketPlace user=marketPlacerRepository.findByEmailAddr(p.getName());
+				model.addAttribute("loginUser", user);
+				model.addAttribute("firstName", user.getFirstName());
+				model.addAttribute("path","/user/marketplacedashbord");	
+			}
+		}else
+			model.addAttribute("firstName","");
+	}
+	
+	@RequestMapping("/default")
+	public String dashbordManagement(Principal p, Model model) {
+		if(loginType.equalsIgnoreCase("seller")) {
+			return "redirect:/user/sellerdashbord";
+		}else if(loginType.equalsIgnoreCase("marketplace")) {
+			return "redirect:/user/marketplacedashbord";
+		}else {
+			return "adminLogin";
+		}
+	}
+
 	@RequestMapping("/adminLogin")
 	public String loginRegister(Model model){
 		return "adminLogin";
@@ -98,6 +149,7 @@ public class MainController {
 			if(seller.getSignUpType().equalsIgnoreCase("seller") || seller.getSignUpType().equalsIgnoreCase("both")) {
 				
 				seller.setCategorysList(cList);
+				seller.setPassword(bCryptPasswordEncoder.encode(seller.getPassword()));
 				sellerRepository.save(seller);
 			}
 			if(seller.getSignUpType().equalsIgnoreCase("marketplace") || seller.getSignUpType().equalsIgnoreCase("both")) {
@@ -114,11 +166,10 @@ public class MainController {
 				marketPlace.setState(seller.getState());
 				marketPlace.setPincode(seller.getPincode());
 				marketPlace.setGstNo(seller.getGstNo());
-				marketPlace.setPassword(seller.getPassword());
+				marketPlace.setPassword(bCryptPasswordEncoder.encode(seller.getPassword()));
 				marketPlace.setBussinessAddr(seller.getBussinessAddr());
 				marketPlace.setCategorysList(cList);
 				marketPlacerRepository.save(marketPlace);
-				
 			}
 			
 			//sellerRepository.save(seller);
@@ -136,7 +187,23 @@ public class MainController {
 			e.printStackTrace();
 			return "signUp";
 		}
-		
 	}
 		
+	@GetMapping("/about")
+	public String aboutPage() {
+		return "about";
+	}
+	@GetMapping("/contact")
+	public String contactPage() {
+		return "contact";
+	}
+	
+	@GetMapping("/forgotePassword")
+	public String forgotePasswordpage(Model model){
+		model.addAttribute("code","none");
+		model.addAttribute("msg", "none");
+		return "resetPassword";
+	}
+	
+	
 }
