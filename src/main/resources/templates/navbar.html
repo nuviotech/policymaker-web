@@ -14,7 +14,7 @@
 	<link rel="stylesheet" th:href="@{/files/style.css}" />
 	<link rel="icon" type="image/x-icon" th:href="@{/files/images/nuvioseller.png}">
 	
-    <title>Nuvio seller || Better </title>
+    <title th:text="${title}"></title>
     
   </head>
   <body>
@@ -28,7 +28,7 @@
 		
 		  <div class="collapse navbar-collapse" id="navbarSupportedContent">
 		    <ul class="navbar-nav mr-auto">
-		      <li class="nav-item active">
+		      <li class="nav-item ">
 		        <a class="nav-link" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
 		      </li>
 		      <li class="nav-item">
@@ -37,6 +37,9 @@
 		      
 		      <li class="nav-item">
 		        <a class="nav-link" th:href="@{/contact}">Contact</a>
+		      </li>
+		      <li class="nav-item">
+		        <a class="nav-link" th:href="@{/pricing}">Pricing</a>
 		      </li>
 		    </ul>
 		    
@@ -47,7 +50,7 @@
 					 <a
 					th:href="@{ ${(!firstName.equals(''))}? ${path}:'/signUp'}"
 					id="signup-btn"
-					class="nav-link text-light" 
+					class="nav-link text-light text-capitalize" 
 					th:text="${(!firstName.equals('') )?firstName:'Sign up'}">Sign up
 					</a>
 					 
