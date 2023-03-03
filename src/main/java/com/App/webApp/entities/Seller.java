@@ -53,7 +53,9 @@ public class Seller implements LoginUser {
 	@Pattern(regexp = "^[1-9][0-9]{5}$", message = "enter valid area pincode")
 	String pincode;
 	
+
 	@Pattern(regexp="^[a-zA-Z0-9][a-zA-Z0-9]{14}$" , message = "Invalid GSTIN !!")
+
 	String GstNo;
 	
 	@NotBlank(message = "This field is required !!")
