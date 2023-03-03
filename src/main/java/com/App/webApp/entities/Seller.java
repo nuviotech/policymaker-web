@@ -53,7 +53,9 @@ public class Seller implements LoginUser {
 	@Pattern(regexp = "^[1-9][0-9]{5}$", message = "enter valid area pincode")
 	String pincode;
 	
-	@Pattern(regexp="^[a-zA-Z0-9][a-zA-Z0-9]{14}$", message = "Invalid GSTIN !!")
+
+	@Pattern(regexp="^[a-zA-Z0-9][a-zA-Z0-9]{14}$" , message = "Invalid GSTIN !!")
+
 	String GstNo;
 	
 	@NotBlank(message = "This field is required !!")
@@ -70,9 +72,11 @@ public class Seller implements LoginUser {
 	String phoneNumber;
 	
 	String country;
+	int is_active;//1 for active and 0 for deactive
 	String state;
-	String role;
-	String type;
+	String role;//admin or normal user
+	String type;//
+	String resetPasswordCode; //help for reset the password
 	
 	/*@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "seller")
 	private List<Categorys> categorysList = new ArrayList<>();*/
@@ -97,11 +101,13 @@ public class Seller implements LoginUser {
 		SellerID = sellerID;
 	}
 
-
+	
 
 	public String getFirstName() {
 		return firstName;
 	}
+
+
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
@@ -170,6 +176,7 @@ public class Seller implements LoginUser {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
 
 
 /*
@@ -185,8 +192,24 @@ public class Seller implements LoginUser {
 
 
 
+	
+
+
+
 	public List<Categorys> getCategorysList() {
 		return categorysList;
+	}
+
+
+
+	public int getIs_active() {
+		return is_active;
+	}
+
+
+
+	public void setIs_active(int is_active) {
+		this.is_active = is_active;
 	}
 
 
@@ -289,6 +312,15 @@ public class Seller implements LoginUser {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	
+
+	public String getResetPasswordCode() {
+		return resetPasswordCode;
+	}
+	public void setResetPasswordCode(String resetPasswordCode) {
+		this.resetPasswordCode = resetPasswordCode;
 	}
 
 

@@ -8,6 +8,7 @@ import com.App.webApp.entities.Seller;
 public interface MarketPlacerRepository extends JpaRepository<MarketPlace, Integer> {
 	public MarketPlace findByEmailAddrAndPassword(String emailId,String password);
 	public MarketPlace findByEmailAddr(String email);
+	public MarketPlace findByResetPasswordCode(String code);
 
 
 }

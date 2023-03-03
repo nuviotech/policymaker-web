@@ -48,6 +48,7 @@ public class MarketPlace implements LoginUser {
 	@Pattern(regexp = "^[1-9][0-9]{5}$", message = "enter valid area pincode")
 	String pincode;
 	
+	@Pattern(regexp="^[a-zA-Z0-9][a-zA-Z0-9]{14}$" , message = "Invalid GSTIN !!")
 	String GstNo;
 	
 	@NotBlank(message = "This field is required !!")
@@ -66,8 +67,11 @@ public class MarketPlace implements LoginUser {
 	String phoneNumber;
 	
 	String country;
+	int is_active;//1 for active and 0 for deactive
 	String state;
 	String role;
+	String resetPasswordCode; //help for reset the password
+
 	
 	
 	/*@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "seller")
@@ -198,6 +202,7 @@ public class MarketPlace implements LoginUser {
 	public void setCountry(String country) {
 		this.country = country;
 	}
+	
 
 	public String getState() {
 		return state;
@@ -231,6 +236,33 @@ public class MarketPlace implements LoginUser {
 		this.role = role;
 	}
 
+	public String getResetPasswordCode() {
+		return resetPasswordCode;
+	}
+
+	public void setResetPasswordCode(String resetPasswordCode) {
+		this.resetPasswordCode = resetPasswordCode;
+	}
+
+	public List<Categorys> getCategorysListM() {
+		return categorysListM;
+	}
+
+	public void setCategorysListM(List<Categorys> categorysListM) {
+		this.categorysListM = categorysListM;
+	}
+
+	public int getIs_active() {
+		return is_active;
+	}
+
+	public void setIs_active(int is_active) {
+		this.is_active = is_active;
+	}
+
+	
+	
+	
 	
 	
 }

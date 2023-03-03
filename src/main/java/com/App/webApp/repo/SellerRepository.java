@@ -7,5 +7,6 @@ import com.App.webApp.entities.Seller;
 public interface SellerRepository extends JpaRepository<Seller, Integer> {
 	public Seller findByEmailAddrAndPassword(String emailId,String password);
 	public Seller findByEmailAddr(String email);
+	public Seller findByResetPasswordCode(String code);
 
 }

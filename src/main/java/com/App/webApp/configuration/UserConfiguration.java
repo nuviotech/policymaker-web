@@ -40,7 +40,7 @@ public class UserConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.authorizeRequests().antMatchers("/user/**").hasRole("ADMIN").antMatchers("/admin/**").hasRole("ADMIN")
+		http.authorizeRequests().antMatchers("/seller/**").hasRole("SELLER").antMatchers("/marketplace/**").hasRole("MARKETPLACE")
 				.antMatchers("/**").permitAll().and().formLogin().loginPage("/adminLogin")
 				.loginProcessingUrl("/do_login").defaultSuccessUrl("/default").and().csrf().disable();
 

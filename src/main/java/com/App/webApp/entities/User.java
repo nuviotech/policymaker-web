@@ -97,6 +97,8 @@ public class User {
 	@Transient
 	String role="ROLE_ADMIN";
 	
+	
+	
 	public User() {}
 	
 
