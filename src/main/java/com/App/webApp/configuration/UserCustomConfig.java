@@ -3,9 +3,11 @@ package com.App.webApp.configuration;
 import java.util.Collection;
 import java.util.HashSet;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.App.webApp.service.LoginUser;
 
@@ -13,6 +15,8 @@ import com.App.webApp.service.LoginUser;
 
 public class UserCustomConfig implements UserDetails {
 	private LoginUser user;
+	@Autowired
+	BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	public UserCustomConfig(LoginUser u) {
 		super();

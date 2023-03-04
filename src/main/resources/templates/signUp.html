@@ -188,13 +188,19 @@
 	
 	
 		<script th:if="${msg.equals('password')}">
-			swal("Oops, Something wrong.", "Confirmation password is wrong. please enter correct password and try again.", "error");
+			swal("Fill Confirmation Password.", "Confirmation password is wrong. please enter correct password and try again.", "error");
 		</script>
 		<script th:if="${msg.equals('save')}">
 			swal("Save successfull.", "Your, data is saved successfully. thank you..", "success");
 		</script>
 		<script th:if="${msg.equals('error')}">
-			swal("Opps, something wrong", "Please try with another email address, or fill correct data.", "error");
+			swal("Opps, something went wrong!!", "Something went wrong on server", "error");
+		</script>
+		<script th:if="${msg.equals('marketplace_exists')}">
+			swal("Account already exists", "please change email address, already exists in marketplace account.", "error");
+		</script> 
+		<script th:if="${msg.equals('seller_exists')}">
+			swal("Account already exists", "please change email address, already exists in seller account.", "error");
 		</script>
 		<script th:src="@{/files/CountryState.js}"></script>
 	</section>
