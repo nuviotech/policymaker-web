@@ -4,24 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import com.App.webApp.entities.Categorys;
+import com.App.webApp.entities.MarketPlace;
+import com.App.webApp.entities.Seller;
 import com.App.webApp.repo.CategorysRepository;
 import com.App.webApp.repo.MarketPlacerRepository;
 import com.App.webApp.repo.SellerRepository;
 @Component
 public class ServiceClass {
 	@Autowired
-	static CategorysRepository categorysRepository;
+	CategorysRepository categorysRepository;
 	@Autowired
-	static SellerRepository sellerRepository;
+	SellerRepository sellerRepository;
 	@Autowired
-	static MarketPlacerRepository marketPlacerRepository;
+	MarketPlacerRepository marketPlacerRepository;
 	
-	public static List<String> getCategorysList(){
+	public List<String> getCategorysList(){
 		List<String> list=new ArrayList<>();
 		for(Categorys category: categorysRepository.findAll()) {
 			list.add(category.getCatergoryName());
@@ -30,7 +30,6 @@ public class ServiceClass {
 	}
 	
 	//this method helps to identify user belong wich table
-	
 	public LoginUser getLoginUserByTypeAndEmail(String type,String email) {
 		LoginUser user=null;
 		if(type.equals("seller")) {
@@ -42,7 +41,6 @@ public class ServiceClass {
 		return user;
 	}
 	
-	
 	public LoginUser getLoginUserByTypeAndResetPasswordCode(String type,String code) {
 		LoginUser user=null;
 		if(type.equals("seller")) {
@@ -51,6 +49,25 @@ public class ServiceClass {
 			user=marketPlacerRepository.findByResetPasswordCode(code);
 		}
 		return user;
+	}
+	
+	//check first check user is exists if exists then show msg
+	public String checkUserExistsOrNot(String email,String type) {
+		Seller seller=null;//
+		MarketPlace marketplace=null;//
+		if(type.equalsIgnoreCase("seller") || type.equalsIgnoreCase("both")) {
+			seller=sellerRepository.findByEmailAddr(email);
+		}
+		if(type.equalsIgnoreCase("marketplace") || type.equalsIgnoreCase("both")) {
+			marketplace=marketPlacerRepository.findByEmailAddr(email);
+		}
+		
+		if(seller!=null) {
+			return "S";
+		}else if(marketplace!=null) {
+			return "M";
+		}
+		return "";
 	}
 	
 }

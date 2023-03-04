@@ -23,7 +23,6 @@ public class UserCustomConfigService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
-		System.out.println("full Username include & :  "+username);
 		LoginUser user=null;
 		String array[]=username.split("&");
 		String email=array[0];
@@ -35,10 +34,10 @@ public class UserCustomConfigService implements UserDetailsService {
 			}else if(type.equalsIgnoreCase("marketplace")){
 				user = marketPlacerRepository.findByEmailAddr(email);
 			}
-			System.out.println("User name :  "+email);
 			if (user == null) {
 				throw new UsernameNotFoundException("Invalid User name or password !!");
 			} else {
+				
 				user.setSignUpType(type);
 				MainController.loginType=type;
 				return new UserCustomConfig(user);

@@ -99,11 +99,14 @@ public class MainController {
 	@RequestMapping("/default")
 	public String dashbordManagement(Principal p, Model model) {
 		try {
+
 			if(loginType.equalsIgnoreCase("seller")) {
 				return "redirect:/seller/sellerdashbord";
 			}else if(loginType.equalsIgnoreCase("marketplace")) {
 				return "redirect:/marketplace/marketplacedashbord";
 			}
+				
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -129,47 +132,57 @@ public class MainController {
 		model.addAttribute("seller",new Seller());
 		model.addAttribute("msg", "none");
 		model.addAttribute("categorys", categorysRepository.findAll());
-		System.out.println("cat sie : "+categorysRepository.findAll().size());
-		System.out.println("as seller....");
 		return "signUp";
 	}
 	
 	@PostMapping("/doSignUp")
 	public String signUp(@Valid @ModelAttribute("seller") Seller seller,BindingResult result, Model model,
 			HttpSession session,@RequestParam("categorys") String categorys) {
-
 		
 		String array[]=categorys.split("&");
 		
 		try {
+			String flag=serviceClass.checkUserExistsOrNot(seller.getEmailAddr(),seller.getSignUpType());
+	
+			if(!flag.equals("")) {
+				model.addAttribute("seller", seller);
+				if(flag.equals("M"))
+					model.addAttribute("msg","marketplace_exists");
+				else if(flag.equals("S"))
+					model.addAttribute("msg","seller_exists");
+				model.addAttribute("categorys", categorysRepository.findAll());
+				System.out.println("EMAIL ALLREDY EXISTS "+flag);
+				return "signUp";
+			}
+			
 			if (result.hasErrors()) {
 				model.addAttribute("seller", seller);
 				model.addAttribute("msg","none");
 				model.addAttribute("categorys", categorysRepository.findAll());
-				System.out.println("error generate "+result.toString());
+				
 				return "signUp";
 			}
 			if(!seller.getPassword().equals(seller.getPasswordConfirm())) {
 				model.addAttribute("msg","password");
-				return "sellerSignup";
+				model.addAttribute("categorys", categorysRepository.findAll());
+				return "signUp";
 			}
 			
 			
 			List<Categorys> cList=new ArrayList<>();
 			for(String cat:array) {
-				System.out.println(cat);
 				if(cat.length()>=1) {
 					Categorys c=categorysRepository.findByCatergoryName(cat.trim());
 					cList.add(c);
 				}
 			}
-			System.out.println("categorys list : "+cList);
+			String encPassword=bCryptPasswordEncoder.encode(seller.getPassword());
 			if(seller.getSignUpType().equalsIgnoreCase("seller") || seller.getSignUpType().equalsIgnoreCase("both")) {
 				
 				seller.setCategorysList(cList);
 				seller.setRole("ROLE_SELLER");
 				seller.setIs_active(1);
-				seller.setPassword(bCryptPasswordEncoder.encode(seller.getPassword()));
+				seller.setPassword(encPassword);
 				sellerRepository.save(seller);
 			}
 			if(seller.getSignUpType().equalsIgnoreCase("marketplace") || seller.getSignUpType().equalsIgnoreCase("both")) {
@@ -188,7 +201,7 @@ public class MainController {
 				marketPlace.setState(seller.getState());
 				marketPlace.setPincode(seller.getPincode());
 				marketPlace.setGstNo(seller.getGstNo());
-				marketPlace.setPassword(bCryptPasswordEncoder.encode(seller.getPassword()));
+				marketPlace.setPassword(encPassword);
 				marketPlace.setBussinessAddr(seller.getBussinessAddr());
 				marketPlace.setCategorysList(cList);
 				marketPlacerRepository.save(marketPlace);
@@ -202,7 +215,7 @@ public class MainController {
 			return "signUp";
 	
 		}catch (Exception e) {
-			System.out.println("Error generated");
+		
 			model.addAttribute("categorys", categorysRepository.findAll());
 			model.addAttribute("msg","error");
 			model.addAttribute("seller",new Seller());
@@ -269,7 +282,6 @@ public class MainController {
 			}
 			
 			boolean flag = EmailActions.sendResetPasswordEmailMessage(user,encodedString, emailSender);
-			System.out.println("reset password email : " + flag);
 			model.addAttribute("msg", "sendEmail");
 		}
 
@@ -294,7 +306,6 @@ public class MainController {
 			model.addAttribute("msg", "password");
 			model.addAttribute("code", code);
 		}
-		System.out.println("Reset password code : " + code);
 
 		return "resetPassword";
 	}
@@ -304,7 +315,6 @@ public class MainController {
 			Model model) {
 		String array[]=stringEncodeDecode.getDecodeString(code).split("&");
 	//	LoginUser user=serviceClass.getLoginUserByTypeAndResetPasswordCode(array[1], code);
-		System.out.println("String is "+stringEncodeDecode.getDecodeString(code));
 		LoginUser user=null;
 		if(array[1].equals("seller")) {
 			user=sellerRepository.findByResetPasswordCode(code);
